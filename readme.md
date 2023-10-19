@@ -10,6 +10,11 @@ Installation
 ------------
 To install the package, run the following command in the root directory of the repository:
 ```
+conda create -n spinningup python=3.9
+conda activate spinningup
+
+git clone https://github.com/openai/spinningup.git
+cd spinningup
 pip install -e .
 ```
 
