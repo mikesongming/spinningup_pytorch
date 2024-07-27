@@ -15,7 +15,9 @@ setup(
     version=__version__,#'0.1',
     install_requires=[
         'cloudpickle',
-        'gym[atari,box2d,classic_control]~=0.15.3',
+        'numpy<2',
+        'opencv-python~=3.4',
+        'gym[atari,box2d,classic_control]~=0.26',
         'ipython',
         'joblib',
         'matplotlib',

@@ -21,7 +21,7 @@ def reward_to_go(rews):
         rtgs[i] = rews[i] + (rtgs[i+1] if i+1 < n else 0)
     return rtgs
 
-def train(env_name='CartPole-v0', hidden_sizes=[32], lr=1e-2, 
+def train(env_name='CartPole-v1', hidden_sizes=[32], lr=1e-2,
           epochs=50, batch_size=5000, render=False):
 
     # make environment, check spaces, get obs / act dims
@@ -64,8 +64,7 @@ def train(env_name='CartPole-v0', hidden_sizes=[32], lr=1e-2,
         batch_lens = []         # for measuring episode lengths
 
         # reset episode-specific variables
-        obs = env.reset()       # first obs comes from starting distribution
-        done = False            # signal from environment that episode is over
+        obs, _ = env.reset()       # first obs comes from starting distribution
         ep_rews = []            # list for rewards accrued throughout ep
 
         # render first episode of each epoch
@@ -83,13 +82,13 @@ def train(env_name='CartPole-v0', hidden_sizes=[32], lr=1e-2,
 
             # act in the environment
             act = get_action(torch.as_tensor(obs, dtype=torch.float32))
-            obs, rew, done, _ = env.step(act)
+            obs, rew, terminated, truncated, _ = env.step(act)
 
             # save action, reward
             batch_acts.append(act)
             ep_rews.append(rew)
 
-            if done:
+            if terminated or truncated:
                 # if episode is over, record info about episode
                 ep_ret, ep_len = sum(ep_rews), len(ep_rews)
                 batch_rets.append(ep_ret)
@@ -99,7 +98,7 @@ def train(env_name='CartPole-v0', hidden_sizes=[32], lr=1e-2,
                 batch_weights += list(reward_to_go(ep_rews))
 
                 # reset episode-specific variables
-                obs, done, ep_rews = env.reset(), False, []
+                (obs, _), ep_rews = env.reset(), []
 
                 # won't render again this epoch
                 finished_rendering_this_epoch = True
