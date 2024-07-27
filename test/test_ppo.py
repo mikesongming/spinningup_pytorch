@@ -4,9 +4,10 @@ import unittest
 from functools import partial
 
 import gym
-import tensorflow as tf
+# import tensorflow as tf
 
-from spinup import ppo_tf1 as ppo
+# from spinup import ppo_tf1 as ppo
+from spinup import ppo_pytorch as ppo
 
 
 class TestPPO(unittest.TestCase):
