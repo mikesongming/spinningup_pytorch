@@ -5,7 +5,6 @@ import os.path as osp
 # import tensorflow as tf
 import torch
 from spinup import EpochLogger
-from spinup.utils.logx import restore_tf_graph
 
 
 def load_policy_and_env(fpath, itr='last', deterministic=False):

@@ -22,7 +22,7 @@ def mlp(sizes, activation, output_activation=nn.Identity):
 
     Args:
         sizes: Tuple, list, or other iterable giving the number of units
-            for each layer of the MLP. 
+            for each layer of the MLP.
 
         activation: Activation function for all layers except last.
 
@@ -76,7 +76,7 @@ class MLPGaussianActor(nn.Module):
         Initialize an MLP Gaussian Actor by making a PyTorch module for computing the
         mean of the distribution given a batch of observations, and a log_std parameter.
 
-        Make log_std a PyTorch Parameter with the same shape as the action vector, 
+        Make log_std a PyTorch Parameter with the same shape as the action vector,
         independent of observations, initialized to [-0.5, -0.5, ..., -0.5].
         (Make sure it's trainable!)
         """
@@ -85,9 +85,9 @@ class MLPGaussianActor(nn.Module):
         #   YOUR CODE HERE    #
         #                     #
         #######################
-        # self.log_std = 
-        # self.mu_net = 
-        pass 
+        # self.log_std =
+        # self.mu_net =
+        pass
 
     #================================(Given, ignore)==========================================#
     def forward(self, obs, act=None):
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     logdir = "/tmp/experiments/%i"%int(time.time())
 
     ActorCritic = partial(exercise1_2_auxiliary.ExerciseActorCritic, actor=MLPGaussianActor)
-    
+
     ppo(env_fn = lambda : gym.make('InvertedPendulum-v2'),
         actor_critic=ActorCritic,
         ac_kwargs=dict(hidden_sizes=(64,)),

@@ -12,13 +12,23 @@ To install the package, run the following command in the root directory of the r
 ```
 conda create -n spinningup python=3.9
 conda activate spinningup
+```
+Then, install `mpi4py` by conda:
+```
+conda install -c conda-forge mpi4py
+```
+Codesigning MPI orted on Mac OS
+```
+sudo codesign --force --deep --sign - `which orted`
+```
 
+```
 git clone https://github.com/openai/spinningup.git
 cd spinningup
 pip install -e .
 ```
 
-Welcome to Spinning Up in Deep RL! 
+Welcome to Spinning Up in Deep RL!
 ==================================
 
 This is an educational resource produced by OpenAI that makes it easier to learn about deep reinforcement learning (deep RL).
