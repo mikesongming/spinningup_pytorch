@@ -2,6 +2,7 @@ import time
 import joblib
 import os
 import os.path as osp
+import gym
 # import tensorflow as tf
 import torch
 from spinup import EpochLogger
@@ -52,6 +53,8 @@ def load_policy_and_env(fpath, itr='last', deterministic=False):
     try:
         state = joblib.load(osp.join(fpath, 'vars'+itr+'.pkl'))
         env = state['env']
+        spec = state['spec']
+        env.unwrapped.spec = spec
     except:
         env = None
 
