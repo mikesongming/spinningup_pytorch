@@ -8,7 +8,7 @@ import torch
 from spinup import EpochLogger
 
 
-def load_policy_and_env(fpath, itr='last', deterministic=False):
+def load_policy_and_env(fpath, itr='last', deterministic=False, render_mode=None, save_video=False):
     """
     Load a policy from save, whether it's TF or PyTorch, along with RL env.
 
@@ -55,6 +55,10 @@ def load_policy_and_env(fpath, itr='last', deterministic=False):
         env = state['env']
         spec = state['spec']
         env.unwrapped.spec = spec
+        env.unwrapped.render_mode = render_mode
+        if save_video:
+            assert render_mode != 'human', "Cannot save video in human render mode."
+            env = gym.wrappers.RecordVideo(env, 'videos')
     except:
         env = None
 
@@ -118,8 +122,21 @@ if __name__ == '__main__':
     parser.add_argument('--norender', '-nr', action='store_true')
     parser.add_argument('--itr', '-i', type=int, default=-1)
     parser.add_argument('--deterministic', '-d', action='store_true')
+    parser.add_argument('--save_video', '-sv', action='store_true')
+    parser.add_argument('--render_mode', '-r', type=str, default='rgb_array')
     args = parser.parse_args()
+
+    render_mode, save_video = args.render_mode, args.save_video
+    if not args.norender:
+        render_mode = None
+        save_video = False
+    else:
+        if save_video:
+            render_mode = 'rgb_array'
+
     env, get_action = load_policy_and_env(args.fpath,
                                           args.itr if args.itr >=0 else 'last',
-                                          args.deterministic)
+                                          args.deterministic,
+                                          render_mode,
+                                          args.save_video)
     run_policy(env, get_action, args.len, args.episodes, not(args.norender))
