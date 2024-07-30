@@ -18,7 +18,7 @@ setup(
         'numpy<2',
         'opencv-python~=3.4',
         # 'gym[atari,box2d,classic_control]~=0.26',
-        'gym @ git+https://github.com/mikesongming/gym.git#egg=gym[all]',
+        'gym@git+https://github.com/mikesongming/gym.git#egg=gym[all]',
         'ipython',
         'joblib',
         'matplotlib',

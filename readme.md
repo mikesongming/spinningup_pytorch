@@ -21,6 +21,10 @@ Codesigning MPI orted on Mac OS
 ```
 sudo codesign --force --deep --sign - `which orted`
 ```
+Install *MY Gym[all]*
+```
+pip install 'git+https://github.com/mikesongming/gym.git#egg=gym[all]'
+```
 
 ```
 git clone https://github.com/openai/spinningup.git
